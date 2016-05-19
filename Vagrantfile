@@ -3,19 +3,25 @@
 
 Vagrant.configure(2) do |config|
 
-  config.vm.define "alpine" do |alpine|
+  config.vm.define "infrawork" do |infrawork|
 
-    alpine.vm.box = "maier/alpine-3.3.1-x86_64"
+    infrawork.vm.box = "infra-workbox"
 
-    #alpine.ssh.username = "vagrant"
-    #alpine.ssh.password = "vagrant"
+    unless Vagrant.has_plugin?("vagrant-alpine")
+      raise 'vagrant-alpine is not installed!'
+    end
 
-    # Requires the vagrant-alpine plugin
-    # TODO: Check for the plugin
-    alpine.vm.network "private_network", ip: "172.28.128.250"
-    alpine.vm.synced_folder ".", "/vagrant", type: "nfs"
+    if Vagrant.has_plugin?("vagrant-vbguest")
+      config.vbguest.auto_update = false
+    end
 
-    alpine.vm.provider "virtualbox" do |vb|
+    infrawork.ssh.username = "vagrant"
+    infrawork.ssh.password = "vagrant"
+
+    infrawork.vm.network "private_network", ip: "172.28.128.250"
+    infrawork.vm.synced_folder ".", "/vagrant", type: "nfs"
+
+    infrawork.vm.provider "virtualbox" do |vb|
       vb.name = 'infrawork'
       vb.cpus = 1
       vb.memory = 1024
