@@ -1,0 +1,10 @@
+
+dist_name="alpine"
+dist_vers="3.3.1"
+dist_arch="x86_64"
+
+# local or remote
+build_type="local"
+
+# END
+
