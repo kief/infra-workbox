@@ -1,2 +1,4 @@
 # infra-workbox
-Build a Vagrant box for working on infrastructure
+
+Build a Vagrant box for working on infrastructure.
+
