@@ -1,10 +1,18 @@
-
-dist_name="alpine"
-dist_vers="3.3.1"
+#
+dist_name="ubuntu"
+dist_vers="14.04.3"
 dist_arch="x86_64"
 
-# local or remote
+# what type of build to perform:
+#
+#   'remote'
+#       run 'packer push --create <template>' to send
+#       the template up to Atlas for building.
+#
+#   'local'
+# - remote -- 'packer push --create <template>'
+# - local -- 'packer build' resulting box is uploaded to atlas
+#
 build_type="local"
 
 # END
-

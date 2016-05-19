@@ -1,5 +1,2 @@
-set -ux
-
-# nothing special required
-
+set -ex
 exit 0

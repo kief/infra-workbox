@@ -1,7 +1,6 @@
-set -eux
+set -ex
 
-apk add sudo
-adduser vagrant wheel
+sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=sudo' /etc/sudoers
+sed -i -e 's/%sudo  ALL=(ALL:ALL) ALL/%sudo  ALL=NOPASSWD:ALL/g' /etc/sudoers
 
-echo "Defaults exempt_group=wheel" > /etc/sudoers
-echo "%wheel ALL=NOPASSWD:ALL" >> /etc/sudoers
+exit 0
