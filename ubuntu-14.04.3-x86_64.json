@@ -10,6 +10,10 @@
                 "scripts/02sshd.sh",
                 "scripts/03vagrant.sh",
                 "scripts/04sudoers.sh",
+                "scripts/10ruby.sh",
+                "scripts/20terraform.sh",
+                "scripts/21packer.sh",
+                "scripts/22aws.sh",
                 "scripts/90virtualbox.sh",
                 "scripts/99cleanup.sh",
                 "scripts/99minimize.sh"
@@ -63,7 +67,7 @@
             ],
 
             "vboxmanage": [
-                [ "modifyvm", "{{.Name}}", "--memory", "512" ],
+                [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
                 [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
             ]
         }

@@ -10,7 +10,6 @@ Vagrant.configure(2) do |config|
     infrawork.ssh.username = "vagrant"
     infrawork.ssh.password = "vagrant"
 
-    # infrawork.vm.network "private_network", ip: "172.28.128.250"
     infrawork.vm.synced_folder ".", "/vagrant", disabled: false
 
     infrawork.vm.provider "virtualbox" do |vb|
@@ -19,10 +18,6 @@ Vagrant.configure(2) do |config|
       vb.memory = 1024
       # vb.gui = true
     end
-
-    config.vm.provision "shell", path: "scripts/10ruby.sh"
-    config.vm.provision "shell", path: "scripts/20terraform.sh"
-    config.vm.provision "shell", path: "scripts/21packer.sh"
 
   end
 
