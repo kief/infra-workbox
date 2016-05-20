@@ -19,6 +19,10 @@ Vagrant.configure(2) do |config|
       vb.memory = 1024
       # vb.gui = true
     end
+
+    config.vm.provision "shell", path: "scripts/10terraform.sh"
+    config.vm.provision "shell", path: "scripts/11packer.sh"
+
   end
 
 end
