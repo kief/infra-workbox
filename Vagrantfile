@@ -20,8 +20,9 @@ Vagrant.configure(2) do |config|
       # vb.gui = true
     end
 
-    config.vm.provision "shell", path: "scripts/10terraform.sh"
-    config.vm.provision "shell", path: "scripts/11packer.sh"
+    config.vm.provision "shell", path: "scripts/10ruby.sh"
+    config.vm.provision "shell", path: "scripts/20terraform.sh"
+    config.vm.provision "shell", path: "scripts/21packer.sh"
 
   end
 
