@@ -15,6 +15,7 @@
                 "scripts/21packer.sh",
                 "scripts/22aws.sh",
                 "scripts/23docker.sh",
+                "scripts/31vagrant-ssh.sh",
                 "scripts/90virtualbox.sh",
                 "scripts/99cleanup.sh",
                 "scripts/99minimize.sh"
