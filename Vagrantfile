@@ -9,8 +9,14 @@ Vagrant.configure(2) do |config|
 
     infrawork.ssh.username = "vagrant"
     infrawork.ssh.password = "vagrant"
+    infrawork.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     infrawork.vm.synced_folder ".", "/vagrant", disabled: false
+    infrawork.vm.synced_folder "..", "/home/vagrant/projects", disabled: false
+    infrawork.vm.network "forwarded_port", guest: 8080, host: 8080
+
+    infrawork.vm.provision "shell", path: "vagrant-scripts/setup-ssh.sh"
+    infrawork.vm.provision "shell", path: "vagrant-scripts/setup-aws.sh"
 
     infrawork.vm.provider "virtualbox" do |vb|
       vb.name = 'infrawork'
