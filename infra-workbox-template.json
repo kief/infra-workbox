@@ -91,8 +91,7 @@
             "metadata": {
                 "provider": "virtualbox",
                 "description": "Box for working locally on infra-lab",
-                "created_at": "{{timestamp}}",
-                "version": "0.1"
+                "created_at": "{{timestamp}}"
             }
         }
       ]
