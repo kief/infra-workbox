@@ -5,17 +5,7 @@ Provides a Vagrant box that can be used to work on infrastructure. It's intended
 The tooling includes Terraform, Packer, and the awscli client (with more to come as needed). The intention is to support working with AWS infrastructure.
 
 
-# Making the box available
-
-The simplest case for using this workbox is to use one that someone else has built. This is the intended use case for coursework. If this is the case, install the box locally:
-
-    vagrant box add infrawork <path-to>/infra-workbox.box
-
-
-The more complex case is to build the box yourself. Follow the instructions below for "building the box", which will install the box locally for you.
-
-
-# Using it
+# Using the workbox
 
 The recommended use case is to clone this project in a folder which has subfolders for each project that will use this box. The parent folder, where this infra-workbox project is cloned to, is referred to as the ++projects++ folder.
 
@@ -44,20 +34,25 @@ You should find the projects directory, the parent of this one, in ~/projects.
 
 # Building the box
 
-The simple case is to use a box that someone else, such as the course leader, has already built, so that everyone is working from consistent starting point. But if you're not using this box as part of a course, or if you're the one leading the course, you can build it following these instructions.
+By default, the box is built and uploaded to Atlas when changes are committed to my github project. If you want to build your own version, without uploading it to Atlas, you can run the build script (NOTE: This may not work without fiddling, since it's not my current use case).
 
-Make sure you have VirtualBox, Vagrant, and Packer installed. Then run:
+        ./build.sh
 
-    ./build.sh
+This will run Packer (which must be in your path) to build the box and install it locally as ++infra-workbox++. This isn't how the Vagrantfile looks for the box, so you'll need to modify your Vagrantfile to match:
 
-This not only builds the box, it also installs it to your local Vagrant boxes. You can try out your box by running:
-
-    vagrant up
-    vagrant ssh
+        infrawork.vm.box = "infra-workbox"
 
 
-# TODO
+If you want to use an Atlas account, make a file ++../.secrets/packer-secrets.sh++, and put your ATLAS_TOKEN in it:
 
-Put the box somewhere public.
+        export ATLAS_TOKEN="your-token-here"
+
+The the ++build.sh++ script will use this.
+
+
+## TODO
+
+Make it simpler for people to build their own box, whether or not they want to upload it to Atlas.
+
 
 

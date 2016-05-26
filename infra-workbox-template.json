@@ -83,12 +83,16 @@
         },
         {
             "type": "atlas",
+            "only": ["virtualbox-iso"],
+            "artifact": "{{user `atlas_user`}}/infra-workbox",
             "token": "{{user `atlas_token`}}",
             "artifact": "kief/infra-workbox",
             "artifact_type": "vagrant.box",
             "metadata": {
-              "created_at": "{{timestamp}}",
-              "provider": "virtualbox"
+                "provider": "virtualbox",
+                "description": "Box for working locally on infra-lab",
+                "created_at": "{{timestamp}}",
+                "version": "0.1"
             }
         }
       ]
