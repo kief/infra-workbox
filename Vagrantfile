@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "infrawork" do |infrawork|
 
-    infrawork.vm.box = "infra-workbox"
+    infrawork.vm.box = "kief/infra-workbox"
 
     infrawork.ssh.username = "vagrant"
     infrawork.ssh.password = "vagrant"

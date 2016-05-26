@@ -80,6 +80,16 @@
             "type": "vagrant",
             "output": "infra-workbox.box",
             "keep_input_artifact": false
-        }]
+        },
+        {
+            "type": "atlas",
+            "token": "{{user `atlas_token`}}",
+            "artifact": "kief/infra-workbox",
+            "artifact_type": "vagrant.box",
+            "metadata": {
+              "created_at": "{{timestamp}}"
+            }
+        }
+      ]
     ]
 }
