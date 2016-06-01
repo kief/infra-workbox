@@ -14,7 +14,6 @@ Vagrant.configure(2) do |config|
 
     infrawork.vm.synced_folder '.', '/vagrant', disabled: false
     infrawork.vm.synced_folder '..', '/home/vagrant/projects', disabled: false
-    infrawork.vm.network 'forwarded_port', guest: 8080, host: 8080
 
     infrawork.vm.provision 'shell', path: 'vagrant-scripts/setup-ssh.sh'
     infrawork.vm.provision 'shell', path: 'vagrant-scripts/setup-aws.sh'
