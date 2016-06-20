@@ -54,5 +54,3 @@ The the ++build.sh++ script will use this.
 
 Make it simpler for people to build their own box, whether or not they want to upload it to Atlas.
 
-
-
