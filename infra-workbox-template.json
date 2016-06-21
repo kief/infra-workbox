@@ -28,8 +28,7 @@
       {
          "type": "virtualbox-iso",
          "virtualbox_version_file": ".vbox_version",
-         "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
-         "guest_additions_mode": "attach",
+
          "guest_os_type": "Ubuntu_64",
          "headless": true,
          "disk_size": 10240,
@@ -38,6 +37,9 @@
          "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso",
          "iso_checksum": "b8b172cbdf04f5ff8adc8c2c1b4007ccf66f00fc6a324a6da6eba67de71746f6",
          "iso_checksum_type": "sha256",
+
+         "guest_additions_url": "{{user `guest_additions_url`}}",
+         "guest_additions_mode": "attach",
 
          "ssh_username": "vagrant",
          "ssh_password": "vagrant",
@@ -93,5 +95,8 @@
             }
          }
       ]
-   ]
+   ],
+  "variables": {
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.0.22/VBoxGuestAdditions_5.0.22.iso"
+  }
 }
