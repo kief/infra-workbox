@@ -39,6 +39,7 @@
          "iso_checksum_type": "sha256",
 
          "guest_additions_url": "{{user `guest_additions_url`}}",
+         "guest_additions_sha256": "{{user `guest_additions_sha256`}}",
          "guest_additions_mode": "attach",
 
          "ssh_username": "vagrant",
@@ -97,6 +98,7 @@
       ]
    ],
   "variables": {
-      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.0.22/VBoxGuestAdditions_5.0.22.iso"
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.0.22/VBoxGuestAdditions_5.0.22.iso",
+      "guest_additions_sha256": "7bd528cd4d973be13a0bcd3c063981ca015a5afb8b4a4acd75ce39938eed95f2"
   }
 }
