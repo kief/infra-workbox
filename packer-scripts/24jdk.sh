@@ -1,2 +1,2 @@
 
-apt-get install -y openjdk-7-jdk
+apt-get install -y openjdk-8-jdk

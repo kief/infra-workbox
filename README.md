@@ -2,7 +2,7 @@
 
 Provides a Vagrant box that can be used to work on infrastructure. It's intended to be useful for experimentation and also in a course/classroom environment. The tools are pre-installed in the Vagrant box, so people using it can simply use the box in their Vagrant configuration, without needing to download and install everything over the network.
 
-The tooling includes Terraform, Packer, and the awscli client (with more to come as needed). The intention is to support working with AWS infrastructure.
+The tooling includes Terraform, Packer, Docker, and the awscli client. The intention is to support working with AWS infrastructure.
 
 
 # Using the workbox
