@@ -1,0 +1,86 @@
+{
+   "description": "Infra Workbox Trusty",
+   "provisioners": [
+     {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -S sh '{{.Path}}'",
+      "scripts": [
+         "packer-scripts/00base.sh",
+         "packer-scripts/01networking.sh",
+         "packer-scripts/02sshd.sh",
+         "packer-scripts/03vagrant.sh",
+         "packer-scripts/04sudoers.sh",
+         "packer-scripts/10ruby.sh",
+         "packer-scripts/20terraform.sh",
+         "packer-scripts/21packer.sh",
+         "packer-scripts/22aws.sh",
+         "packer-scripts/23docker.sh",
+         "packer-scripts/24jdk.sh",
+         "packer-scripts/31vagrant-ssh.sh",
+         "packer-scripts/41serverspec.sh",
+         "packer-scripts/90virtualbox.sh",
+         "packer-scripts/99cleanup.sh",
+         "packer-scripts/99minimize.sh"
+      ]
+     }
+   ],
+   "builders": [
+     {
+      "type": "virtualbox-iso",
+      "virtualbox_version_file": ".vbox_version",
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_mode": "attach",
+      "guest_os_type": "Ubuntu_64",
+      "headless": true,
+      "disk_size": 10240,
+      "http_directory": "http",
+
+      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.4-server-amd64.iso",
+      "iso_checksum": "2ac1f3e0de626e54d05065d6f549fa3a",
+      "iso_checksum_type": "md5",
+
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "15m",
+      "shutdown_command": "echo 'vagrant'| sudo -S shutdown -P now",
+
+      "boot_wait": "10s",
+      "boot_command": [
+         "<esc><wait>",
+         "<esc><wait>",
+         "<enter><wait>",
+         "/install/vmlinuz<wait>",
+         " auto<wait>",
+         " console-setup/ask_detect=false<wait>",
+         " console-setup/layoutcode=us<wait>",
+         " console-setup/modelcode=pc105<wait>",
+         " debian-installer=en_US<wait>",
+         " fb=false<wait>",
+         " initrd=/install/initrd.gz<wait>",
+         " kbd-chooser/method=us<wait>",
+         " keyboard-configuration/layout=USA<wait>",
+         " keyboard-configuration/variant=USA<wait>",
+         " locale=en_US<wait>",
+         " netcfg/get_hostname=ubuntu-1404<wait>",
+         " netcfg/get_domain=vagrantup.com<wait>",
+         " noapic<wait>",
+         " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
+         " -- <wait>",
+         "<enter><wait>"
+      ],
+
+      "vboxmanage": [
+         [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+         [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ]
+     }
+   ],
+   "post-processors": [
+     [{
+      "type": "vagrant",
+      "output": "infra-workbox-trusty.box",
+      "keep_input_artifact": false
+     }]
+   ]
+}

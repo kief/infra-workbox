@@ -1,0 +1,215 @@
+{
+  "description": "Infra Workbox",
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -S sh '{{.Path}}'",
+      "scripts": [
+        "packer-scripts/00base.sh",
+        "packer-scripts/01networking.sh",
+        "packer-scripts/02sshd.sh",
+        "packer-scripts/03vagrant.sh",
+        "packer-scripts/04sudoers.sh",
+        "packer-scripts/10ruby.sh",
+        "packer-scripts/20terraform.sh",
+        "packer-scripts/21packer.sh",
+        "packer-scripts/22aws.sh",
+        "packer-scripts/23docker.sh",
+        "packer-scripts/24jdk.sh",
+        "packer-scripts/31vagrant-ssh.sh",
+        "packer-scripts/41serverspec.sh",
+        "packer-scripts/90virtualbox.sh",
+        "packer-scripts/99cleanup.sh",
+        "packer-scripts/99minimize.sh"
+      ]
+    }
+  ],
+
+  "builders": [
+    {
+      "name": "infra-workbox-trusty",
+
+      "type": "virtualbox-iso",
+      "virtualbox_version_file": ".vbox_version",
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_mode": "attach",
+      "guest_os_type": "Ubuntu_64",
+      "headless": true,
+      "disk_size": 10240,
+      "http_directory": "http",
+
+      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.4-server-amd64.iso",
+      "iso_checksum": "2ac1f3e0de626e54d05065d6f549fa3a",
+      "iso_checksum_type": "md5",
+
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "15m",
+      "shutdown_command": "echo 'vagrant'| sudo -S shutdown -P now",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz<wait>",
+        " auto<wait>",
+        " console-setup/ask_detect=false<wait>",
+        " console-setup/layoutcode=us<wait>",
+        " console-setup/modelcode=pc105<wait>",
+        " debian-installer=en_US<wait>",
+        " fb=false<wait>",
+        " initrd=/install/initrd.gz<wait>",
+        " kbd-chooser/method=us<wait>",
+        " keyboard-configuration/layout=USA<wait>",
+        " keyboard-configuration/variant=USA<wait>",
+        " locale=en_US<wait>",
+        " netcfg/get_hostname=ubuntu-1404<wait>",
+        " netcfg/get_domain=vagrantup.com<wait>",
+        " noapic<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
+        " -- <wait>",
+        "<enter><wait>"
+      ],
+
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ]
+    },
+
+    {
+      "name": "infra-workbox",
+
+      "type": "virtualbox-iso",
+      "guest_os_type": "Ubuntu_64",
+
+      "headless": true,
+      "disk_size": 10240,
+      "http_directory": "http",
+
+      "iso_url": "http://releases.ubuntu.com/15.10/ubuntu-15.10-server-amd64.iso",
+      "iso_checksum": "86aa35a986eba6e5ad30e3d486d57efe6803ae7ea4859b0216953e9e62871131",
+      "iso_checksum_type": "sha256",
+
+      "output_directory": "output-ubuntu-15.10-amd64",
+      "vm_name": "packer-ubuntu-15.10-amd64",
+
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_mode": "attach",
+
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "15m",
+      "shutdown_command": "sudo systemctl poweroff",
+
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter><wait>",
+        "<f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "/install/vmlinuz ",
+        "initrd=/install/initrd.gz ",
+        "net.ifnames=0 ",
+        "auto-install/enable=true ",
+        "debconf/priority=critical ",
+        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-15.10/preseed.cfg ",
+        "<enter>"
+      ],
+
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "512" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ]
+
+    },
+
+    {
+      "name": "infra-workbox-xenial",
+
+      "type": "virtualbox-iso",
+      "virtualbox_version_file": ".vbox_version",
+
+      "guest_os_type": "Ubuntu_64",
+      "headless": true,
+      "disk_size": 10240,
+      "http_directory": "http",
+
+      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso",
+      "iso_checksum": "b8b172cbdf04f5ff8adc8c2c1b4007ccf66f00fc6a324a6da6eba67de71746f6",
+      "iso_checksum_type": "sha256",
+
+      "guest_additions_url": "{{user `guest_additions_url`}}",
+      "guest_additions_sha256": "{{user `guest_additions_sha256`}}",
+      "guest_additions_mode": "attach",
+
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "15m",
+      "shutdown_command": "sudo systemctl poweroff",
+
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter><wait>",
+        "<f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "/install/vmlinuz ",
+        "initrd=/install/initrd.gz ",
+        "net.ifnames=0 ",
+        "auto-install/enable=true ",
+        "debconf/priority=critical ",
+        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-16.04/preseed.cfg ",
+        "<enter>"
+      ],
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "512" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ]
+    }
+
+  ],
+   "post-processors": [
+      [
+         {
+            "type": "vagrant",
+            "output": "{{.build_name}}.box",
+            "keep_input_artifact": false
+         },
+         {
+            "type": "atlas",
+            "only": [ "infra-workbox" ],
+            "artifact": "{{user `atlas_user`}}/infra-workbox",
+            "token": "{{user `atlas_token`}}",
+            "artifact": "kief/infra-workbox",
+            "artifact_type": "vagrant.box",
+            "metadata": {
+              "provider": "virtualbox",
+              "description": "Box for working locally on infra-lab",
+              "created_at": "{{timestamp}}"
+            }
+         }
+      ]
+   ],
+  "variables": {
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.0.22/VBoxGuestAdditions_5.0.22.iso",
+      "guest_additions_sha256": "7bd528cd4d973be13a0bcd3c063981ca015a5afb8b4a4acd75ce39938eed95f2"
+  }
+}
