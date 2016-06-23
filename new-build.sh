@@ -12,24 +12,21 @@ fi
 
 case $1 in
   xenial|16*)
-    RELEASE=16.0.4
     NAME=infra-workbox-xenial
     ;;
   wiley|15*)
-    RELEASE=15.10
-    NAME=infra-workbox-wiley
+    NAME=infra-workbox
     ;;
   trusty|14*)
-    RELEASE=14.04
     NAME=infra-workbox-trusty
     ;;
   *)
-    RELEASE=14.04
-    NAME=infra-workbox
+    echo "Add the Ubuntu version on the command line: 14, 15, or 16"
+    exit
     ;;
 esac
 shift
 
-packer build -color=true $* multi-workbox-template.json || fail "Packer failed"
+packer build -only=${NAME} -color=true $* multi-workbox-template.json || fail "Packer failed"
 vagrant box add -f --name "${NAME}" "${NAME}".box || fail "Failed to add the new box"
 
