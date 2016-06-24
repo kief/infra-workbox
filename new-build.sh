@@ -11,14 +11,11 @@ if [ -f ../.secrets/packer-secrets.sh ] ; then
 fi
 
 case $1 in
-  xenial|16*)
-    NAME=infra-workbox-xenial
-    ;;
   wiley|15*)
-    NAME=infra-workbox
+    NAME=infra-workbox-wiley
     ;;
   trusty|14*)
-    NAME=infra-workbox-trusty
+    NAME=infra-workbox
     ;;
   *)
     echo "Add the Ubuntu version on the command line: 14, 15, or 16"
