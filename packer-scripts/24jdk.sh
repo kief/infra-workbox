@@ -1,7 +1,4 @@
 
-RELEASE=$(lsb_release -cs)
-if [ "${RELEASE}" = "xenial" ] ; then
-  apt-get install -y openjdk-8-jdk
-else
-  apt-get install -y openjdk-7-jdk
-fi
+echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
+apt-get install -y oracle-java8-installer oracle-java8-set-default
