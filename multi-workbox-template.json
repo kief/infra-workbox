@@ -19,6 +19,7 @@
         "packer-scripts/24jdk.sh",
         "packer-scripts/31vagrant-ssh.sh",
         "packer-scripts/41serverspec.sh",
+        "packer-scripts/81utils.sh",
         "packer-scripts/90virtualbox.sh",
         "packer-scripts/99cleanup.sh",
         "packer-scripts/99minimize.sh"
