@@ -1,5 +1,5 @@
 
-apt-get install -y awscli
+apt-get install -y awscli groff
 
 mkdir -p -m 0700 /home/vagrant/.aws
 
