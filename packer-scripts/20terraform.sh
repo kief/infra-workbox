@@ -1,5 +1,7 @@
 set -x
 
+TERRAFORM_VERSION=0.7.0
+
 fail()
 {
   echo "FAIL: $*"
@@ -12,9 +14,9 @@ if [ ! -d /usr/local/terraform ] ; then
   [ -d /tmp/terraform ] || mkdir /tmp/terraform
   cd /tmp/terraform
 
-  curl -Os https://releases.hashicorp.com/terraform/0.6.16/terraform_0.6.16_linux_amd64.zip || fail "Can't download terraform"
-  unzip -q terraform_0.6.16_linux_amd64.zip || fail "Can't unzip terraform"
-  rm terraform_0.6.16_linux_amd64.zip
+  curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip || fail "Can't download terraform"
+  unzip -q terraform_${TERRAFORM_VERSION}_linux_amd64.zip || fail "Can't unzip terraform"
+  rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
   cd /tmp
   mv terraform /usr/local/ || fail "Can't move terraform into place"
 
