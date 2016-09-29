@@ -1,6 +1,6 @@
 set -x
 
-TERRAFORM_VERSION=0.7.0
+TERRAFORM_VERSION=0.7.4
 
 fail()
 {
