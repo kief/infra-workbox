@@ -1,5 +1,7 @@
 set -x
 
+PACKER_VERSION=0.12.0
+
 fail()
 {
   echo "FAIL: $*"
@@ -12,9 +14,9 @@ if [ ! -d /usr/local/packer ] ; then
   [ -d /tmp/packer ] || mkdir /tmp/packer
   cd /tmp/packer
 
-  curl -Os https://releases.hashicorp.com/packer/0.10.2/packer_0.10.2_linux_amd64.zip || fail "Can't download packer"
-  unzip -q packer_0.10.2_linux_amd64.zip || fail "Can't unzip packer"
-  rm packer_0.10.2_linux_amd64.zip
+  curl -Os https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip || fail "Can't download packer"
+  unzip -q packer_${PACKER_VERSION}_linux_amd64.zip || fail "Can't unzip packer"
+  rm packer_${PACKER_VERSION}_linux_amd64.zip
   cd /tmp
   mv packer /usr/local/ || fail "Can't move packer into place"
 
