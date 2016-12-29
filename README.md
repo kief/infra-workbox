@@ -1,56 +1,114 @@
-# infra-workbox builder
+# WARNING!
 
-Provides a Vagrant box that can be used to work on infrastructure. It's intended to be useful for experimentation and also in a course/classroom environment. The tools are pre-installed in the Vagrant box, so people using it can simply use the box in their Vagrant configuration, without needing to download and install everything over the network.
+This code is intended as an example that you can copy and use, rather than a supported module that you should import. I reserve the right to completely change it in dangerous and destructive ways, with complete disregard for backwards compatibility.
 
-The tooling includes Terraform, Packer, Docker, and the awscli client. The intention is to support working with AWS infrastructure.
+Also, I make no guarantees that this code works as you find it. There's a pretty good chance that it's broken. It could be in the middle of a change, using it in some way specific to myself, I may neglect it, or for some other reason.
+
+
+# What this is
+
+This is a Packer project that builds a Vagrant box with various tools installed on it for working with infrastructure. The idea is that you have a Vagrantfile that uses this box, so you can work on a project without having to download the various bits. You can also destroy and rebuild your box at will - this is [infrastructure as code](http://infrastructure-as-code.com) for your local working environment!
+
+I publish builds of the box on Atlas as `kief/infra-workbox`. Feel free to use this, keeping in mind that I'm not guaranteeing it's usable, or consistent from one version to the next.
+
+I mainly use this box to work on Terraform projects with AWS, but I've installed a few other tools as well. The tooling includes Terraform, Packer, Docker, and the awscli client. You can see what's installed on the box by looking at the scripts in [packer-scripts](packer-scripts). 
+
+You may want to fork this project, or copy it, and tweak it for your own needs. The files aren't necessarily parameterized - some things are hard-coded for building `kief/infra-workbox`.
 
 
 # Using the workbox
 
-The recommended use case is to clone this project in a folder which has subfolders for each project that will use this box. The parent folder, where this infra-workbox project is cloned to, is referred to as the ++projects++ folder.
+The recommended use is to create a Vagrantfile and refer to the box built by this project:
 
-Make a folder to hold secrets in the projects folder:
+```
+Vagrant.configure(2) do |config|
+  config.vm.define 'infrawork' do |infrawork|
+    infrawork.vm.box = 'kief/infra-workbox'
+    infrawork.vm.hostname = 'infrawork'
+    infrawork.ssh.username = 'vagrant'
+    infrawork.ssh.password = 'vagrant'
+    infrawork.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    infrawork.vm.synced_folder '.', '/vagrant', disabled: false
+  end
+end
+```
 
-    mkdir ../.secrets
+Assuming you have [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed, start the VM:
 
-Make an ssh key in the secrets folder:
-
-    ssh-keygen -t rsa -C "infraworkbox@your.com" -f ../.secrets/infraworkbox_key -N ""
-
-Make a file ../.secrets/aws_credentials with your AWS keys - the contents should be as below:
-
-    [default]
-    aws_access_key_id = ${AWS_ACCESS_KEY_ID}
-    aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
-
-
-Then start your vagrant machine in the usual way, and ssh into it:
-
-    vagrant up
-    vagrant ssh
-
-You should find the projects directory, the parent of this one, in ~/projects.
+```
+vagrant up
+vagrant ssh
+```
 
 
-# Building the box
+## Automatically configure AWS
 
-By default, the box is built and uploaded to Atlas when changes are committed to my github project. If you want to build your own version, without uploading it to Atlas, you can run the build script (NOTE: This may not work without fiddling, since it's not my current use case).
+One of the hassles of working with AWS is setting up credentials. I automate this so that every time I build or rebuild my workbox, the credentials are immediately in place.
 
-        ./build.sh
+The way I do this is to have Vagrant run a provisioning script. This is in my Vagrantfile:
 
-This will run Packer (which must be in your path) to build the box and install it locally as ++infra-workbox++. This isn't how the Vagrantfile looks for the box, so you'll need to modify your Vagrantfile to match:
+```
+    infrawork.vm.provision 'shell', path: 'vagrant-scripts/setup-aws.sh'
+```
 
-        infrawork.vm.box = "infra-workbox"
+You can see my [setup-aws.sh](vagrant-scripts/setup-aws.sh) script:
+
+```
+if [ ! -f /home/vagrant/projects/.secrets/aws_credentials ] ; then
+  echo "ERROR: Can't find ../.secrets/aws_credentials. Check the README for instructions."
+  exit 1
+fi
+
+cp /home/vagrant/projects/.secrets/aws_credentials /home/vagrant/.aws/credentials
+chown -R vagrant:vagrant /home/vagrant/.aws
+chmod 0600 /home/vagrant/.aws/credentials
+```
+
+This assumes that there is a folder named `.secrets` in the parent folder. My typical project structure is:
+
+```
+./project-parent/
+./project-parent/.secrets/
+./project-parent/.secrets/aws_credentials
+./project-parent/vagrant/
+./project-parent/vagrant/Vagrantfile
+./project-parent/some-project/
+```
+
+Then I add a folder mount to my Vagrantfile:
+
+```
+    infrawork.vm.synced_folder '..', '/home/vagrant/project', disabled: false
+```
+
+This makes the parent folder, and whatever projects I have checked out there, available within the VM under `~/project/`.
+
+If you've already created the vagrant VM instance when you add the credentials file in this way, you'll need to run:
+
+```
+vagrant provision
+```
+
+... or:
+
+```
+vagrant reload --provision
+```
 
 
-If you want to use an Atlas account, make a file ++../.secrets/packer-secrets.sh++, and put your ATLAS_TOKEN in it:
+# Building your own version of the box
 
-        export ATLAS_TOKEN="your-token-here"
+By default, the box is built and uploaded to Atlas when changes are committed to my github project. If you want to build your own version, without uploading it to Atlas, you can run the makefile (NOTE: This may not work without fiddling, since it's not my current use case).
 
-The the ++build.sh++ script will use this.
+Assuming you have GNU Make installed, run:
 
+```
+make
+```
 
-## TODO
+This will run [Packer](https://atlas.hashicorp.com/packer) (which must be installed and in your path) to build the box and install it locally as `infra-workbox`. In order to use this in your Vagrantfile, configure it instead of `kief/infra-workbox`:
 
-Make it simpler for people to build their own box, whether or not they want to upload it to Atlas.
+```
+    infrawork.vm.box = "infra-workbox"
+```
 

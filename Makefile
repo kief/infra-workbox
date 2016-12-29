@@ -1,5 +1,5 @@
 
-all: infra-workbox.box
+all: add
 
 infra-workbox.box: multi-workbox-template.json packer-scripts/* vagrant-scripts/* ../.secrets/packer-secrets.json
 	packer build -only=infra-workbox -color=true -var-file=../.secrets/packer-secrets.json multi-workbox-template.json
