@@ -1,2 +1,2 @@
 
-apt-get install -y realpath groff
+apt-get install -y realpath groff git-core
