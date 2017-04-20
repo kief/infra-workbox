@@ -1,6 +1,6 @@
 set -x
 
-PACKER_VERSION=1.0
+PACKER_VERSION=1.0.0
 
 fail()
 {
@@ -8,7 +8,7 @@ fail()
   exit 1
 }
 
-if [ ! -d /usr/local/packer ] ; then
+if [ ! -e /usr/local/packer ] ; then
   apt-get install -y unzip || fail "Can't install unzip"
 
   [ -d /tmp/packer ] || mkdir /tmp/packer
