@@ -82,7 +82,7 @@
           "type": "vagrant-cloud",
           "box_tag": "{{user `atlas_user`}}/infra-workbox",
           "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
-          "version": "{{user `version`}}"
+          "version": "1.0.{{isotime \"20060102030405\"}}"
         }
       ]
    ],
