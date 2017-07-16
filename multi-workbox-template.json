@@ -79,22 +79,9 @@
           "keep_input_artifact": false
         },
         {
-          "type": "atlas",
-          "only": [ "infra-workbox" ],
-          "artifact": "{{user `atlas_user`}}/infra-workbox",
-          "token": "{{user `atlas_token`}}",
-          "artifact_type": "vagrant.box",
-          "metadata": {
-            "provider": "virtualbox",
-            "description": "Box for working locally on infra-lab",
-            "created_at": "{{timestamp}}"
-          }
-        },
-        {
           "type": "vagrant-cloud",
           "box_tag": "{{user `atlas_user`}}/infra-workbox",
-          "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
-          "version": "1.0.{{isotime \"20060102030405\"}}"
+          "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}"
         }
       ]
    ],
