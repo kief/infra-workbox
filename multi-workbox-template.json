@@ -80,7 +80,7 @@
         },
         {
           "type": "vagrant-cloud",
-          "box_tag": "{{user `atlas_user`}}/infra-workbox",
+          "box_tag": "kief/infra-workbox",
           "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
           "version": "1.0.{{isotime \"20060102030405\"}}"
         }
