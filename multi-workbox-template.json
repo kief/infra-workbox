@@ -73,28 +73,21 @@
   ],
    "post-processors": [
       [
-         {
-            "type": "vagrant",
-            "output": "{{build_name}}.box",
-            "keep_input_artifact": false
-         },
-         {
-            "type": "atlas",
-            "only": [ "infra-workbox" ],
-            "artifact": "{{user `atlas_user`}}/infra-workbox",
-            "token": "{{user `atlas_token`}}",
-            "artifact": "kief/infra-workbox",
-            "artifact_type": "vagrant.box",
-            "metadata": {
-              "provider": "virtualbox",
-              "description": "Box for working locally on infra-lab",
-              "created_at": "{{timestamp}}"
-            }
-         }
+        {
+          "type": "vagrant",
+          "output": "{{build_name}}.box",
+          "keep_input_artifact": false
+        },
+        {
+          "type": "vagrant-cloud",
+          "box_tag": "{{user `atlas_user`}}/infra-workbox",
+          "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
+          "version": "{{user `version`}}"
+        }
       ]
    ],
   "variables": {
-      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.0.22/VBoxGuestAdditions_5.0.22.iso",
-      "guest_additions_sha256": "7bd528cd4d973be13a0bcd3c063981ca015a5afb8b4a4acd75ce39938eed95f2"
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.1.22/VBoxGuestAdditions_5.1.22.iso",
+      "guest_additions_sha256": "54df14f234b6aa484b94939ab0f435b5dd859417612b65a399ecc34a62060380"
   }
 }
