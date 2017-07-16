@@ -71,23 +71,27 @@
       ]
     }
   ],
-   "post-processors": [
-      [
-        {
-          "type": "vagrant",
-          "output": "{{build_name}}.box",
-          "keep_input_artifact": false
-        },
-        {
-          "type": "vagrant-cloud",
-          "box_tag": "{{user `ATLAS_BUILD_SLUG`}}",
-          "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
-          "version": "1.{{user `ATLAS_BUILD_NUMBER`}}.{{user `ATLAS_BUILD_ID`}}"
-        }
-      ]
-   ],
+  "post-processors": [
+    [
+      {
+        "type": "vagrant",
+        "output": "{{build_name}}.box",
+        "keep_input_artifact": false
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "{{user `ATLAS_BUILD_SLUG`}}",
+        "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
+        "version": "1.{{user `ATLAS_BUILD_NUMBER`}}.{{user `ATLAS_BUILD_ID`}}"
+      }
+    ]
+  ],
   "variables": {
-      "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.1.22/VBoxGuestAdditions_5.1.22.iso",
-      "guest_additions_sha256": "54df14f234b6aa484b94939ab0f435b5dd859417612b65a399ecc34a62060380"
+    "guest_additions_url": "http://download.virtualbox.org/virtualbox/5.1.22/VBoxGuestAdditions_5.1.22.iso",
+    "guest_additions_sha256": "54df14f234b6aa484b94939ab0f435b5dd859417612b65a399ecc34a62060380",
+    "VAGRANT_CLOUD_TOKEN": "{{env `VAGRANT_CLOUD_TOKEN`}}",
+    "ATLAS_BUILD_SLUG": "{{env `ATLAS_BUILD_SLUG`}}",
+    "ATLAS_BUILD_NUMBER": "{{env `ATLAS_BUILD_NUMBER`}}",
+    "ATLAS_BUILD_ID": "{{env `ATLAS_BUILD_ID`}}"
   }
 }
