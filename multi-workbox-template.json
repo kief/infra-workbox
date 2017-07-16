@@ -80,9 +80,9 @@
         },
         {
           "type": "vagrant-cloud",
-          "box_tag": "kief/infra-workbox",
+          "box_tag": "{{user `ATLAS_BUILD_SLUG`}}",
           "access_token": "{{user `VAGRANT_CLOUD_TOKEN`}}",
-          "version": "1.0.{{isotime \"20060102030405\"}}"
+          "version": "1.{{user `ATLAS_BUILD_NUMBER`}}.{{user `ATLAS_BUILD_ID`}}"
         }
       ]
    ],
