@@ -1,6 +1,6 @@
 set -x
 
-PACKER_VERSION=1.0.4
+PACKER_VERSION=1.1.0
 
 fail()
 {
