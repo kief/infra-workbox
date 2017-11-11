@@ -23,7 +23,7 @@ add: infra-workbox.box ## Build and add the box to local cache
 	vagrant box add -f --name infra-workbox infra-workbox.box
 
 clean:  ## Delete output from the local directory
-	rm infra-workbox.box
+	rm -f infra-workbox.box
 
 distclean: ## Clean up all interim files and things
 	vagrant halt
