@@ -1,5 +1,6 @@
 
-# apt-get install -y awscli groff
+# jq is handy for parsing output from the awscli
+apt-get install -y jq
 
 [ -d /tmp/awscli ] || mkdir /tmp/awscli
 cd /tmp/awscli
