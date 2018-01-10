@@ -1,1 +1,1 @@
-apt install -y snapd
+apt-get install -y snapd
