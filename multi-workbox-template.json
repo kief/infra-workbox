@@ -18,7 +18,7 @@
         "packer-scripts/22aws.sh",
         "packer-scripts/23docker.sh",
         "packer-scripts/24jdk.sh",
-        "packer-scripts/25gcloud.sh*",
+        "packer-scripts/25gcloud.sh",
         "packer-scripts/26azure.sh",
         "packer-scripts/27k8s.sh",
         "packer-scripts/31vagrant-ssh.sh",
