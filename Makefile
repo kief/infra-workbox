@@ -10,12 +10,12 @@ ifeq ("$(wildcard $(SECRETS_FILE))","")
   $(error $(SECRETS_FILE) is missing)
 endif
 
-infra-workbox.box: multi-workbox-template.json packer-scripts/* vagrant-scripts/* ../.secrets/packer-secrets.json
+infra-workbox.box: packer-ubuntu-14.04.json packer-scripts/* vagrant-scripts/* ../.secrets/packer-secrets.json
 	packer build \
 		-color=true \
 		-var-file=$(SECRETS_FILE) \
 		-var MINOR_VERSION=80 \
-		multi-workbox-template.json
+		packer-ubuntu-14.04.json
 
 build: infra-workbox.box ## Build and upload the .box file
 
