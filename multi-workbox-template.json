@@ -12,6 +12,7 @@
         "packer-scripts/04sudoers.sh",
         "packer-scripts/05snap.sh",
         "packer-scripts/10apt.sh",
+        "packer-scripts/11kernel-updates.sh",
         "packer-scripts/11ruby.sh",
         "packer-scripts/20terraform.sh",
         "packer-scripts/21packer.sh",
