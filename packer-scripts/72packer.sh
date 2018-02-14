@@ -1,6 +1,6 @@
 set -ex
 
-PACKER_VERSION=1.1.3
+PACKER_VERSION=1.2.0
 
 if [ ! -e /usr/local/bin/packer ] ; then
   apt-get install -y unzip
