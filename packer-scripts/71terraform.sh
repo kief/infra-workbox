@@ -8,7 +8,7 @@ if [ ! -e /usr/local/bin/terraform ] ; then
   mkdir -p /tmp/terraform-download
   cd /tmp/terraform-download
 
-  curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+  curl -LfOs https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
   unzip -q terraform_${TERRAFORM_VERSION}_linux_amd64.zip
   rm ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip
   mv ./terraform /usr/local/bin/
