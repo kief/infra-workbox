@@ -6,7 +6,6 @@
       "execute_command": "echo 'vagrant' | sudo -S sh '{{.Path}}'",
       "scripts": [
         "packer-scripts/00base.sh",
-        "packer-scripts/01networking.sh",
         "packer-scripts/02sshd.sh",
         "packer-scripts/03vagrant.sh",
         "packer-scripts/04sudoers.sh",
@@ -26,7 +25,6 @@
         "packer-scripts/81utils.sh",
         "packer-scripts/82gcloud.sh",
         "packer-scripts/83azure..sh",
-        "packer-scripts/90virtualbox.sh",
         "packer-scripts/99cleanup.sh",
         "packer-scripts/99minimize.sh"
       ]
