@@ -3,8 +3,6 @@ set -x
 
 apt-get -y autoremove
 apt-get -y clean
-#rm -f /var/cache/apt/*cache.bin
-#rm -f /var/lib/apt/lists/*
 
 echo "cleaning up dhcp leases"
 rm -f /var/lib/dhcp/*
