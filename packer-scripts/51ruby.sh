@@ -1,7 +1,7 @@
 
 set -ex
 
-RUBYVER=2.3
+RUBYVER=2.4
 
 apt-get install -y ruby${RUBYVER} ruby${RUBYVER}-dev liblzma-dev zlib1g-dev
 update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby${RUBYVER} 10
