@@ -21,6 +21,7 @@
         "packer-scripts/72packer.sh",
         "packer-scripts/73serverspec.sh",
         "packer-scripts/74inspec.sh",
+        "packer-scripts/75gitcrypt.sh",
         "packer-scripts/81aws.sh",
         "packer-scripts/81utils.sh",
         "packer-scripts/82gcloud.sh",
