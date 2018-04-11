@@ -1,6 +1,6 @@
 set -ex
 
-TERRAFORM_VERSION=0.11.6
+TERRAFORM_VERSION=0.11.7
 
 if [ ! -e /usr/local/bin/terraform ] ; then
   apt-get install -y unzip
