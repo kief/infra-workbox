@@ -27,6 +27,7 @@
         "packer-scripts/82gcloud.sh",
         "packer-scripts/83azure..sh",
         "packer-scripts/99cleanup.sh",
+        "packer-scripts/91profile.sh",
         "packer-scripts/99minimize.sh"
       ]
     }
