@@ -10,7 +10,8 @@
         "packer-scripts/02sshd.sh",
         "packer-scripts/03vagrant.sh",
         "packer-scripts/04sudoers.sh",
-        "packer-scripts/09kernel-updates.sh",
+        "packer-scripts/06kernel-updates.sh",
+        "packer-scripts/07virtualbox.sh",
         "packer-scripts/10apt.sh",
         "packer-scripts/11snap.sh",
         "packer-scripts/31vagrant-ssh.sh",
@@ -26,7 +27,7 @@
         "packer-scripts/81aws.sh",
         "packer-scripts/81utils.sh",
         "packer-scripts/82gcloud.sh",
-        "packer-scripts/83azure..sh",
+        "packer-scripts/83azure.sh",
         "packer-scripts/99cleanup.sh",
         "packer-scripts/91profile.sh",
         "packer-scripts/99minimize.sh"
@@ -41,41 +42,38 @@
       "type": "virtualbox-iso",
       "guest_os_type": "Ubuntu_64",
 
-      "virtualbox_version_file": ".vbox_version",
       "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
-      "guest_additions_mode": "attach",
-      "headless": true,
-      "disk_size": 10240,
+      "headless": "true",
+      "disk_size": "40000",
       "http_directory": "http",
 
-      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso",
-      "iso_checksum": "dd54dc8cfc2a655053d19813c2f9aa9f",
-      "iso_checksum_type": "md5",
-
+      "iso_url": "http://releases.ubuntu.com/17.10/ubuntu-17.10.1-server-amd64.iso",
+      "iso_checksum": "8ff73f1b622276758475c3bd5190b382774626de5a82c50930519381f6c3a3f8",
+      "iso_checksum_type": "sha256",
+      "output_directory": "output-ubuntu-17.10-amd64-{{build_type}}",
 
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "15m",
-      "shutdown_command": "echo 'vagrant'| sudo -S shutdown -P now",
+      "ssh_timeout": "60m",
+      "shutdown_command": "sudo systemctl poweroff",
 
-      "boot_wait": "10s",
+      "vm_name": "packer-ubuntu-17.10-amd64",
+      "boot_wait": "5s",
       "boot_command": [
-      "<esc><wait>",
-      "<esc><wait>",
-      "<enter><wait>",
-      "/install/vmlinuz ",
-      "initrd=/install/initrd.gz ",
-      "biosdevname=0 ",
-      "auto-install/enable=true ",
-      "debconf/priority=critical ",
-      "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-14.04.4/preseed.cfg ",
-      "<enter>"
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz ",
+        "initrd=/install/initrd.gz ",
+        "net.ifnames=0 ",
+        "auto-install/enable=true ",
+        "debconf/priority=critical ",
+        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-17.10/preseed.cfg ",
+        "<enter>"
       ],
-
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+        ["modifyvm", "{{.Name}}", "--memory", "512"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"]
       ]
     }
   ],
@@ -84,7 +82,8 @@
     [
       {
         "type": "vagrant",
-        "output": "{{build_name}}.box",
+        "output": "infra-workbox.box",
+        "compression_level": "6",
         "keep_input_artifact": false
       },
       {
@@ -95,6 +94,7 @@
       }
     ]
   ],
+ 
   "variables": {
     "VAGRANT_CLOUD_TOKEN": "",
     "MAJOR_VERSION": "1",

@@ -1,7 +1,7 @@
 .PHONY: build add clean distclean help
 .DEFAULT_GOAL := help
 
-all: add
+all: build
 
 SECRETS_FILE=../.secrets/packer-secrets.json
 TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
@@ -10,16 +10,16 @@ ifeq ("$(wildcard $(SECRETS_FILE))","")
   $(error $(SECRETS_FILE) is missing)
 endif
 
-infra-workbox.box: packer-ubuntu-14.04.json packer-scripts/* vagrant-scripts/* ../.secrets/packer-secrets.json
+infra-workbox.box: ubuntu-17.10.json packer-scripts/* vagrant-scripts/* ../.secrets/packer-secrets.json
 	packer build \
 		-color=true \
 		-var-file=$(SECRETS_FILE) \
 		-var MINOR_VERSION=80 \
-		packer-ubuntu-14.04.json
+		ubuntu-17.10.json
 
 build: infra-workbox.box ## Build and upload the .box file
 
-add: infra-workbox.box ## Build and add the box to local cache
+add: infra-workbox.box ## Add the box to local cache
 	vagrant box add -f --name infra-workbox infra-workbox.box
 
 clean:  ## Delete output from the local directory

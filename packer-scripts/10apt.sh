@@ -4,7 +4,7 @@ apt-get install -y python2.7 python-pip
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 10
 
 apt-get install -y software-properties-common
-apt-get install apt-transport-https
+apt-get install -y apt-transport-https
 
 add-apt-repository -y ppa:webupd8team/java
 apt-add-repository -y ppa:brightbox/ruby-ng

@@ -112,3 +112,6 @@ This will run [Packer](https://atlas.hashicorp.com/packer) (which must be instal
     infrawork.vm.box = "infra-workbox"
 ```
 
+# Credits
+
+Originally based on a template by [maier](https://github.com/maier/packer-templates). Ubuntu 17.x template is based on [kaorimatz's](https://github.com/kaorimatz/packer-templates/blob/master/ubuntu-17.10-amd64.json).
