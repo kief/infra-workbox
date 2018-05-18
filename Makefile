@@ -14,7 +14,7 @@ infra-workbox.box: ubuntu-17.10.json packer-scripts/* vagrant-scripts/* ../.secr
 	packer build \
 		-color=true \
 		-var-file=$(SECRETS_FILE) \
-		-var MINOR_VERSION=80 \
+		-var MINOR_VERSION=0 \
 		ubuntu-17.10.json
 
 build: infra-workbox.box ## Build and upload the .box file

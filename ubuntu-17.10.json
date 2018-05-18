@@ -97,7 +97,7 @@
  
   "variables": {
     "VAGRANT_CLOUD_TOKEN": "",
-    "MAJOR_VERSION": "1",
+    "MAJOR_VERSION": "2",
     "MINOR_VERSION": ""
   }
 }
