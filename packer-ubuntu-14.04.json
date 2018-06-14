@@ -13,6 +13,7 @@
         "packer-scripts/09kernel-updates.sh",
         "packer-scripts/10apt.sh",
         "packer-scripts/11snap.sh",
+        "packer-scripts/21timesync.sh",
         "packer-scripts/31vagrant-ssh.sh",
         "packer-scripts/51ruby.sh",
         "packer-scripts/52jdk.sh",
